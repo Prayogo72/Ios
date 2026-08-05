@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode System</title>
+    <style>
+        body { 
+           font-family: sans-serif; 
+           background: #f5f5f5; 
+           display: flex; 
+           justify-content: center; 
+           align-items: center; 
+           height: 100vh; margin: 0; 
+        }
+        .card { 
+            background: white; 
+            padding: 25px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08); 
+            width: 85%; 
+            max-width: 400px; 
+            text-align: center;
+            box-sizing: border-box;
+          
+            display: flex;
+            flex-direction: column;
+            min-height: 520px; 
+        }
+        
+        h1 { font-size: 24px; 
+        margin-bottom: 20px; 
+        }
+        
+        input { 
+          width: 100%; 
+          padding: 12px; 
+          border: 1px solid 
+          #ccc; border-radius: 8px; 
+          box-sizing: border-box; 
+          margin-bottom: 15px; 
+          font-size: 16px; 
+          text-align: center; }
+        button { background: #e0e0e0; 
+          border: none; 
+          padding: 12px 24px; 
+          border-radius: 8px; 
+          font-size: 16px; 
+          cursor: pointer; 
+          font-weight: bold; 
+          margin-bottom: 15px; 
+          width: 100%; }
+        #reader { width: 100%; 
+          border-radius: 8px; 
+          overflow: hidden; 
+          background: #fafafa; 
+          margin-bottom: 15px; }
+        .result-title {
+          font-weight: bold; 
+          font-size: 16px; 
+          margin-top: 10px; }
+        #result-text { 
+          color: #2ecc71; 
+          font-weight: bold; 
+          font-size: 18px; 
+          margin-top: 5px; }
+    </style>
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script src="libs/JsBarcode.all.min.js"></script> 
+</head>
+<body>
+
+<div class="card">
+    <h1>Barcode System</h1>
+    <input type="text" id="code-input" placeholder="Ketik sesuatu di sini..." oninput="generateBarcode()">
+    
+    <div style="margin: 15px 0;">
+        <svg id="barcode"></svg>
+    </div>
+    <button type="button" id="scan-btn" onclick="startScan()">📷 Scan Barcode</button>
+    <div id="reader"></div>
+    <div class="result-title">Hasil Scan:</div>
+    <div id="result-text">-</div>
+    <button type="button" id="lokasi-btn" onclick="bukaModalLokasi()" style="background: #2ecc71; color: white; padding: 8px; font-size: 13px; width: auto; margin: 0 auto 15px auto; border-radius: 6px;">📍 Daftar Lokasi</button>
+
+<div id="modal-lokasi" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+<div style="background: white; padding: 20px 14px 25px 14px; border-radius: 12px; width: 95%; max-width: 450px; height: auto; max-height: 90vh; overflow-y: auto; text-align: left; box-sizing: border-box;">
+
+        <h3 style="margin-top: 0; text-align: center;">Daftar Lokasi Gudang</h3>
+        <div style="display: flex; gap: 5px; margin-bottom: 15px;">
+            <button type="button" onclick="tampilkanG(1)" style="background: #34495e; color: white; margin: 0; padding: 8px;">G1</button>
+            <button type="button" onclick="tampilkanG(2)" style="background: #34495e; color: white; margin: 0; padding: 8px;">G2</button>
+            <button type="button" onclick="tampilkanG(3)" style="background: #34495e; color: white; margin: 0; padding: 8px;">G3</button>
+        </div>
+        <div id="konten-lokasi" style="font-size: 13px; color: #333;">
+            <p style="text-align: center; color: #7f8c8d;">Pilih kategori G1/G2/G3 di atas...</p>
+        </div>
+        <button type="button" onclick="tutupModalLokasi()" style="background: #e74c3c; color: white; margin-top: 15px; padding: 10px;">Tutup</button>
+    </div>
+</div>
+
+    <br>
+    <div class="footer">
+        <p>Barcode System v1.2.0</p>
+        <p>© 2026 </p>
+    </div>
+</div>
+
+    <script src="library-lokasi.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
