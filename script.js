@@ -210,3 +210,47 @@ function pilihLokasi(kodePilihan) {
     
     tutupModalLokasi(); 
 }
+
+function setMaxBrightness() {
+    // Ambil elemen barcode atau gambar barcode yang asli dari halaman
+    let originalBarcode = document.querySelector('svg') || document.querySelector('canvas') || document.querySelector('.barcode-img');
+    let codeText = document.querySelector('input') ? document.querySelector('input').value : 'G3H-004';
+
+    // Buat overlay putih penuh
+    let overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.backgroundColor = '#FFFFFF';
+    overlay.style.zIndex = '99999';
+    overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    
+    // Masukkan teks dan duplikat barcode aslinya ke tengah layar
+    overlay.innerHTML = `
+        <h1 style="color:black; font-size: 28px; font-family:sans-serif; margin-bottom:20px;">${codeText}</h1>
+        <div id="barcode-holder" style="background:white; padding:10px;"></div>
+        <p style="color:#666; margin-top:30px; font-size:14px;">Ketuk di mana saja untuk kembali</p>
+    `;
+    
+    // Tampilkan di body
+    document.body.appendChild(overlay);
+
+    // Pindahkan elemen barcode asli ke dalam overlay supaya garisnya nampil sempurna
+    if (originalBarcode) {
+        let clonedBarcode = originalBarcode.cloneNode(true);
+        // Perbesar ukuran barcode agar gampang diskan BHT
+        clonedBarcode.style.transform = "scale(1.8)";
+        clonedBarcode.style.transformOrigin = "center";
+        document.getElementById('barcode-holder').appendChild(clonedBarcode);
+    }
+    
+    // Klik di mana saja buat tutup mode terang
+    overlay.onclick = function() {
+        document.body.removeChild(overlay);
+    };
+}
